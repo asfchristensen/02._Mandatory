@@ -51,12 +51,15 @@ const apiLimiter = rateLimit({
 });
 app.use(apiLimiter);
 
-app.use("/auth/login", rateLimit({
+const loginLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 3, 
+    max: 100, 
     standardHeaders: true,
     legacyHeaders: false,
-}));
+    message: "Too many login attempts, please try again after 15 minutes",
+    keyGenerator: (req, res) => req.rateLimitKey
+});
+app.use("/auth/login", loginLimiter);
 
 
 /* ----------------------------------------------------------  MIDDLEWARE ------------------------------------------------------------------------ */
@@ -82,6 +85,7 @@ app.use(contactRouter);
 
 import signupRouter from "./routers/signupRouter.js";
 app.use(signupRouter);
+
 
 /* ------------------------------------------------------------  PORT ---------------------------------------------------------------------------- */
 

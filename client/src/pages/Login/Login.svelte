@@ -1,6 +1,6 @@
 <script>
     import { BASE_URL } from "../../store/urlDomain.js";
-    import { user } from "../../store/user.js";
+    import { user, role } from "../../store/user.js";
     import { navigate } from "svelte-navigator";
     import toastr from "toastr";
     import 'toastr/build/toastr.css';
@@ -31,14 +31,18 @@
         console.log(data);
 
         if (data.email === email) {
-            const authenticatedUser = data.email;
-            $user = authenticatedUser; 
+            let authenticatedUsername = data.username;
+            $user = authenticatedUsername;
+            $role = data.role;
             console.log("$USER: ", $user);
+            console.log("$ROLE: ", $role);
             
-            toastr.success(`Welcome ${authenticatedUser}`);
+            toastr.success(`You logged in successfully, welcome back ${$user}`);
             setTimeout(() => {
-                navigate("/contact", { replace: true });
+                navigate("/profile", { replace: true });
             }, 2000)
+        } else {
+            toastr.error("Wrong email or password. Try again.");
         }
 
         email = "";

@@ -1,8 +1,9 @@
 <script>
-    import { navigate, useLocation } from "svelte-navigator";
+    import { useNavigate, useLocation } from "svelte-navigator";
     import { user } from "../../store/user";
 
-    let location = useLocation();
+    export let navigate = useNavigate();
+    export let location = useLocation();
 
     $: if (!$user) {
         navigate("/login", {
@@ -12,4 +13,4 @@
     }
 </script>
 
-<slot/>
+ <slot/>

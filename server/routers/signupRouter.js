@@ -17,9 +17,9 @@ router.post("/signup", async (req, res) => {
         // send mail with nodemailer
         sendSignupConfirmation(username, email).catch(console.error);
 
-        res.status(200).send({ message: 1 });
+        res.status(200).send({ message: username });
     } else {
-        res.status(409).send({ message: 2 });
+        res.status(409).send({ message: "error" });
     }
 });
 

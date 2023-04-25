@@ -29,9 +29,9 @@
         const data = await response.json();
         console.log(data);
 
-        if (data.message === 1) {
-            toastr.success("User successfully created. Welcome ", data.username);
-        } else if (data.message === 2) {
+        if (data.message === username) {
+            toastr.success(`User successfully created. Welcome ${data.message}`);
+        } else if (data.message === "error") {
             toastr.error("Account already exists");
         } else {
             toastr.error("Error creating user");

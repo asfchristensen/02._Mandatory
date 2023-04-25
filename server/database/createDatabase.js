@@ -7,6 +7,7 @@ console.log(isDeleteMode);
 
 if (isDeleteMode) {
     db.exec("DROP TABLE IF EXISTS users");
+    db.exec("DROP TABLE IF EXISTS roles");
 }
 
 // DDL
@@ -17,7 +18,18 @@ db.exec(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT,
         password TEXT,
-        email TEXT
+        email TEXT,
+        role_id INTEGER,
+        FOREIGN KEY (role_id) REFERENCES roles (id)
+    )
+    `
+);
+
+db.exec(
+    `
+    CREATE TABLE IF NOT EXISTS roles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        role TEXT
     )
     `
 );
@@ -27,10 +39,15 @@ db.exec(
 const adminPasswordPlainText = process.env.ADMIN_PASSWORD;
 const adminPasswordHashed = await bcrypt.hash(adminPasswordPlainText, 12);
 
-const guestPasswordPlainText = process.env.GUEST_PASSWORD;
-const guestPasswordHashed = await bcrypt.hash(guestPasswordPlainText, 12);
+const employeePasswordPlainText = process.env.EMPLOYEE_PASSWORD;
+const employeePasswordHashed = await bcrypt.hash(employeePasswordPlainText, 12);
 
 if (isDeleteMode) {
-    db.run("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", ['admin', adminPasswordHashed, 'admin@mail.dk']);
-    db.run("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", ['guest', guestPasswordHashed, 'guest@mail.dk']);
+    // roles db
+    db.run("INSERT INTO roles (role) VALUES (?)", ['admin']);
+    db.run("INSERT INTO roles (role) VALUES (?)", ['employee']);
+
+    // users db
+    db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", ['admin', adminPasswordHashed, 'admin@mail.dk', 1]);
+    db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", ['employee', employeePasswordHashed, 'employee@mail.dk', 2]);
 }

@@ -1,6 +1,6 @@
 <script>
     import { BASE_URL } from "../../store/urlDomain";
-    import { user } from "../../store/user.js";
+    import { user, role } from "../../store/user.js";
     import { Link } from "svelte-navigator";
     import toastr from "toastr";
     import 'toastr/build/toastr.css';
@@ -16,6 +16,7 @@
         const data = await response.json();
 
         $user = null;
+        $role = null;
 
         toastr.info("See you!");
     }

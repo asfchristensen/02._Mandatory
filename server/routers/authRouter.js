@@ -6,8 +6,10 @@ import db from "../database/connection.js";
 
 
 // authentication
-router.post("/auth/login", async (req, res) => {
+router.post("/auth/login", async (req, res, next) => {
     const { username, password, email } = req.body;
+
+
 
     const validUser = await db.get("SELECT * FROM users WHERE email=?", [email]);
     console.log("Valid user: ", validUser);
@@ -18,12 +20,13 @@ router.post("/auth/login", async (req, res) => {
 
     const validPassword = await bcrypt.compare(password, validUser.password);
 
-    if (!validPassword){
+    if (!validPassword) {
         return res.send({ message: "Incorrect password" });
     }
 
     req.session.username = validUser.username;
     req.session.email = validUser.email;
+    req.session.role = validUser.role_id;
     console.log(req.session);
 
     res.send(req.session);
