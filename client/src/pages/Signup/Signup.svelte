@@ -4,9 +4,9 @@
     import toastr from "toastr";
     import 'toastr/build/toastr.css';
 
-    toastr.option = {
+    toastr.options = {
         "positionClass": "toast-top-center",
-        "timeOut": "2000"
+        "timeOut": "1200"
     }
 
     let username = "";

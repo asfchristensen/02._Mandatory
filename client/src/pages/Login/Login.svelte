@@ -1,13 +1,13 @@
 <script>
     import { BASE_URL } from "../../store/urlDomain.js";
-    import { user, role } from "../../store/user.js";
+    import { user, mail, role } from "../../store/user.js";
     import { navigate } from "svelte-navigator";
     import toastr from "toastr";
     import 'toastr/build/toastr.css';
 
-    toastr.option = {
+    toastr.options = {
         "positionClass": "toast-top-center",
-        "timeOut": "2000"
+        "timeOut": "1200"
     }
 
     // for using the variables in login function
@@ -16,6 +16,7 @@
 
     async function validateLogin() {
         const userToJSON = JSON.stringify({email, password});
+        console.log(userToJSON);
 
         const loginURL = $BASE_URL + "/auth/login";
 
@@ -32,9 +33,13 @@
 
         if (data.email === email) {
             let authenticatedUsername = data.username;
+            let authenticatedEmail = data.email;
+            let authenticatedRole = data.role;
             $user = authenticatedUsername;
-            $role = data.role;
+            $mail = authenticatedEmail;
+            $role = authenticatedRole;
             console.log("$USER: ", $user);
+            console.log("$EMAIL: ", $mail);
             console.log("$ROLE: ", $role);
             
             toastr.success(`You logged in successfully, welcome back ${$user}`);
@@ -59,10 +64,11 @@
 <form on:submit|preventDefault={validateLogin}>
 
     <label for="email">Enter username: </label>
-    <input type="text" placeholder="email" name="email" bind:value={email} required>
+    <input type="email" placeholder="email" name="email" bind:value={email} required>
 
     <label for="password">Enter password: </label>
     <input type="password" placeholder="password" name="password" bind:value={password} required>
 
     <button type="submit">Login</button>
 </form>
+

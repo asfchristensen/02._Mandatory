@@ -72,7 +72,29 @@ function authChecker(req, res, next) {
     next();
 }
 
-app.use("/contact", authChecker);
+app.use("/profile", authChecker);
+
+function adminChecker(req, res, next) {
+    console.log("In admin checker...");
+    if (!req.session.role === 1) {
+        return res.send({ message: "You are not authorized to see this page. Please login" });
+    }
+    next();
+}
+
+app.use("/employees", authChecker, adminChecker);
+
+
+function guestChecker(req, res, next) {
+    console.log("In guest checker...");
+    if (!req.session.role === 3) {
+        return res.send({ message: "You are not authorized to see this page. Please login" });
+    }
+    next();
+}
+
+app.use("/review", authChecker, guestChecker);
+
 
 
 /* --------------------------------------------------------  IMPORT ROUTES ----------------------------------------------------------------------- */
@@ -80,11 +102,17 @@ app.use("/contact", authChecker);
 import authRouter from "./routers/authRouter.js";
 app.use(authRouter);
 
-import contactRouter from "./routers/contactRouter.js";
-app.use(contactRouter);
+import profileRouter from "./routers/profileRouter.js";
+app.use(profileRouter);
 
 import signupRouter from "./routers/signupRouter.js";
 app.use(signupRouter);
+
+import employeeRouter from "./routers/employeeRouter.js";
+app.use(employeeRouter);
+
+import reviewRouter from "./routers/reviewRouter.js";
+app.use(reviewRouter);
 
 
 /* ------------------------------------------------------------  PORT ---------------------------------------------------------------------------- */

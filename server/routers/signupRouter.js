@@ -12,7 +12,7 @@ router.post("/signup", async (req, res) => {
 
     if (!userExists) {
         const hashedPassword = await bcrypt.hash(password, 12);
-        db.run("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", [username, hashedPassword, email]);
+        db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", [username, hashedPassword, email, 3]);
 
         // send mail with nodemailer
         sendSignupConfirmation(username, email).catch(console.error);

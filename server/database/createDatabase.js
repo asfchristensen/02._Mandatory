@@ -46,8 +46,13 @@ if (isDeleteMode) {
     // roles db
     db.run("INSERT INTO roles (role) VALUES (?)", ['admin']);
     db.run("INSERT INTO roles (role) VALUES (?)", ['employee']);
+    db.run("INSERT INTO roles (role) VALUES (?)", ['guest']);
 
     // users db
     db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", ['admin', adminPasswordHashed, 'admin@mail.dk', 1]);
     db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", ['employee', employeePasswordHashed, 'employee@mail.dk', 2]);
+    db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", ['employee1', employeePasswordHashed, 'employee1@mail.dk', 2]);
+    db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", ['employee2', employeePasswordHashed, 'employee2@mail.dk', 2]);
+    db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", ['employee3', employeePasswordHashed, 'employee3@mail.dk', 2]);
+    db.run("INSERT INTO users (username, password, email, role_id) VALUES (?, ?, ?, ?)", ['employee4', employeePasswordHashed, 'employee4@mail.dk', 2]);
 }
