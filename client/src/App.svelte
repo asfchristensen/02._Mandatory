@@ -1,8 +1,6 @@
 <script>
-    import { Router, Route, Link } from "svelte-navigator";
+    import { Router, Route } from "svelte-navigator";
     import PrivateRoute from "./components/Protectors/PrivateRoute.svelte";
-    import { user, role } from "./store/user";
-    import Logout from "./pages/Logout/Logout.svelte";
     import Home from "./pages/Home/Home.svelte";
     import Login from "./pages/Login/Login.svelte";
     import Signup from "./pages/Signup/Signup.svelte";
@@ -14,60 +12,13 @@
     import Salary from "./pages/Salary/Salary.svelte";
     import Review from "./pages/Review/Review.svelte";
     import WatchReviews from "./pages/WatchReviews/WatchReviews.svelte";
-
-    // property that checks if the user has a specific role
-    $: hasRole = $role;
-    $: username = $user;
-    
+    import Navbar from "./components/Navbar/Navbar.svelte";
+    import Footer from "./components/Footer/Footer.svelte";
 </script>
 
 <Router>
-    <header>
-        <div class="navbar">
-        <div class="nav-link">
-        {#if hasRole === 1}
-        <nav>
-            <Link to="/">Home</Link>
-            <Link to="/profile">Profile</Link>
-            <Link to="/employees">Employees</Link>
-            <Link to="/expenses">Expenses</Link>
-            <Link to="/watchReviews">Reviews</Link>
-            <Link to="/flavours">Flavours</Link>
-            <Logout/>
-        </nav>
-        {:else if hasRole === 2}
-        <nav>
-            <Link to="/">Home</Link>
-            <Link to="/profile">Profile</Link>
-            <Link to="/schedule">Schedule</Link>
-            <Link to="/salary">Salary</Link>
-            <Link to="/flavours">Flavours</Link>
-            <Logout/>
-        </nav>
-        {:else if hasRole === 3}
-        <nav>
-            <Link to="/">Home</Link>
-            <Link to="/profile">Profile</Link>
-            <Link to="/review">Review</Link>
-            <Link to="/flavours">Flavours</Link>
-            <Logout/>
-        </nav>
-        {:else}
-            <Link to="/">Home</Link>
-            <Link to="/signup">Sign up</Link>
-            <Link to="/profile">Profile</Link>
-            <Link to="/flavours">Flavours</Link>
-        {/if}
-        </div>
-        <div class="nav-user">
-            {#if username}
-            <p>Logged in as: {username}</p>
-            {:else}
-            <p>The epic ice cream store</p>
-            {/if}
-        </div>
-        </div>
-    </header>
+   
+    <Navbar/>
 
     <main>
         <!-- Public routes -->
@@ -110,7 +61,9 @@
         <PrivateRoute path="/review">
             <Review/>
         </PrivateRoute>
-
     </main>
+    
 </Router>
+
+<Footer/>
 

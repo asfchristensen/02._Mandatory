@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import db from "../database/connection.js";
 import { sendSignupConfirmation } from "../util/nodeMailer.js";
 
+
 router.post("/signup", async (req, res) => {
     const { username, password, email } = req.body;
 

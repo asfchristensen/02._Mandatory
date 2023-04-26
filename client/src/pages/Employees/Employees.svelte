@@ -1,7 +1,6 @@
 <script>
-
     import { onMount } from "svelte";
-    import { BASE_URL } from "../../store/urlDomain";
+    import { BASE_URL } from "../../stores/urlDomain";
 
     let employees = [];
 
@@ -12,17 +11,29 @@
         const { data: allEmployees } = await response.json();
         employees = allEmployees;
     });
-
 </script>
 
 <h2>See all employees</h2>
 <h5>For admin only</h5>
 
 {#each employees as employee}
-    <ul>
-        <li>
-            <h5>{employee.username}</h5>
-            <h5>{employee.email}</h5>
-        </li>
-    </ul>
+    <div class="single-employee">
+        <p><span class="headers">Name:</span> {employee.username}</p>
+        <p><span class="headers">Email:</span> {employee.email}</p>
+    </div>
 {/each}
+
+
+<style>
+    .single-employee {
+        border-style: solid;
+        border-color: rgb(135, 117, 174);
+        padding: 1em;
+        margin-bottom: 1em;
+        background-color: rgb(225, 237, 248);
+    }
+
+    .headers {
+        font-weight: bold;
+    }
+</style>

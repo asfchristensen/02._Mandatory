@@ -6,13 +6,10 @@ import db from "../database/connection.js";
 
 
 // authentication
-router.post("/auth/login", async (req, res, next) => {
+router.post("/auth/login", async (req, res) => {
     const { username, password, email } = req.body;
 
-
-
     const validUser = await db.get("SELECT * FROM users WHERE email=?", [email]);
-    console.log("Valid user: ", validUser);
 
     if (!validUser) {
         return res.send({ message: "User does not exist" });
@@ -27,7 +24,6 @@ router.post("/auth/login", async (req, res, next) => {
     req.session.username = validUser.username;
     req.session.email = validUser.email;
     req.session.role = validUser.role_id;
-    console.log(req.session);
 
     res.send(req.session);
 });
@@ -38,6 +34,5 @@ router.get("/auth/logout", (req, res) => {
         res.send({ message: "You are logged out." });
     });
 });
-
 
 export default router;
