@@ -1,4 +1,4 @@
-<p>© 2023</p>
+<p>© Anne Sofie 2023</p>
 
 <style>
     p {
