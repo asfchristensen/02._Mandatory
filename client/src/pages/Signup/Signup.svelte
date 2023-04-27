@@ -14,7 +14,7 @@
     let email = "";
 
     async function handleSignup(){
-        const userToJSON = JSON.stringify({username, password, email});
+        const userCredentials = JSON.stringify({username, password, email});
         const signupURL = $BASE_URL + "/signup";
 
         const response = await fetch(signupURL, {
@@ -22,7 +22,7 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: userToJSON,
+            body: userCredentials,
             credentials: "include"
         });
         const data = await response.json();
@@ -35,7 +35,7 @@
             toastr.error("Error creating user");
         }
 
-        navigate("/login", { replace: true });
+        navigate("/signin", { replace: true });
 
         username = "";
         password = "";

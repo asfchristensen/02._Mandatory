@@ -2,7 +2,7 @@
     import { user, role } from "../../stores/user.js";
     import { Link } from "svelte-navigator";
 
-    import Logout from "../Logout/Logout.svelte";
+    import Signout from "../Signout/Signout.svelte";
 
      // property that checks if the user has a specific role
     $: hasRole = $role;
@@ -22,7 +22,7 @@
                 <Link to="/watchReviews">Ice cream reviews</Link>
                 <Link to="/flavours">Flavours</Link>
                 <Link to="/profile">Profile</Link>
-                <Logout/>
+                <Signout/>
             </nav>
             <!-- employee = 2 -->
             {:else if hasRole === 2}
@@ -32,7 +32,7 @@
                 <Link to="/salary">Salary</Link>
                 <Link to="/flavours">Flavours</Link>
                 <Link to="/profile">Profile</Link>
-                <Logout/>
+                <Signout/>
             </nav>
             <!-- guest = 3 -->
             {:else if hasRole === 3}
@@ -41,7 +41,7 @@
                 <Link to="/review">Make review</Link>
                 <Link to="/flavours">Flavours</Link>
                 <Link to="/profile">Profile</Link>
-                <Logout/>
+                <Signout/>
             </nav>
             {:else}
                 <Link to="/">Home</Link>

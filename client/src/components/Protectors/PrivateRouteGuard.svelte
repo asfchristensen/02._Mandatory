@@ -6,11 +6,11 @@
     export let location = useLocation();
 
     $: if (!$user) {
-        navigate("/login", {
+        navigate("/signin", {
             state: { from: $location.pathname },
             replace: true
         });
     }
 </script>
 
- <slot/>
+<slot/>

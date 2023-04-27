@@ -14,16 +14,16 @@
     let email = "";
     let password = "";
 
-    async function validateLogin() {
-        const userToJSON = JSON.stringify({email, password});
-        const loginURL = $BASE_URL + "/auth/login";
+    async function validateSignin() {
+        const userCredentials = JSON.stringify({email, password});
+        const signinURL = $BASE_URL + "/auth/signin";
 
-        const response = await fetch(loginURL, {
+        const response = await fetch(signinURL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: userToJSON,
+            body: userCredentials,
             credentials: "include"
         });
         const data = await response.json();
@@ -36,10 +36,10 @@
             $mail = authenticatedEmail;
             $role = authenticatedRole;
             
-            toastr.success(`You logged in successfully, welcome back ${$user}`);
+            toastr.success(`You've signed in successfully, welcome back ${$user}`);
             setTimeout(() => {
                 navigate("/profile", { replace: true });
-            }, 2000)
+            }, 1500)
         } else {
             toastr.error("Wrong email or password. Try again.");
         }
@@ -51,15 +51,15 @@
 
 <slot></slot>
 
-<h2>Login page</h2>
+<h2>Sign in page</h2>
 
-<div class="form-login">
-    <form on:submit|preventDefault={validateLogin}>
+<div class="form-signin">
+    <form on:submit|preventDefault={validateSignin}>
         <input type="email" placeholder="email" name="email" bind:value={email} required><br><br>
 
         <input type="password" placeholder="password" name="password" bind:value={password} required><br><br>
 
-        <button type="submit">Login</button>
+        <button type="submit">Sign in</button>
     </form><br><br>
 </div>
 
@@ -70,7 +70,7 @@
 
 
 <style>
-    .form-login {
+    .form-signin {
         display: flex;
         justify-content: center;
         position: relative;

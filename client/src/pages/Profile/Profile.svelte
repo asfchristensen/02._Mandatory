@@ -1,2 +1,17 @@
+<script>
+    import { user } from "../../stores/user.js";
+
+    $: username = $user;
+</script>
+
 <h2>Profile</h2>
-<h5>You are authorized if you can see this page</h5>
+<h5>Welcome to your profile page <span class="user">{username}</span></h5>
+
+
+<style>
+    .user {
+        font-size: large;
+        font-weight: bold;
+        color: rgb(209, 76, 232);
+    }
+</style>

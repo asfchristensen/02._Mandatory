@@ -2,7 +2,7 @@
     import { Router, Route } from "svelte-navigator";
     import PrivateRoute from "./components/Protectors/PrivateRoute.svelte";
     import Home from "./pages/Home/Home.svelte";
-    import Login from "./pages/Login/Login.svelte";
+    import Signin from "./pages/Signin/Signin.svelte";
     import Signup from "./pages/Signup/Signup.svelte";
     import Profile from "./pages/Profile/Profile.svelte";
     import Flavours from "./pages/Flavours/Flavours.svelte";
@@ -24,7 +24,7 @@
         <!-- Public routes -->
 
         <Route path="/" component={Home}></Route>
-        <Route path="/login" component={Login}></Route>
+        <Route path="/signin" component={Signin}></Route>
         <Route path="/signup" component={Signup}></Route>
         <Route path="/flavours" component={Flavours}></Route>
 
@@ -62,7 +62,7 @@
             <Review/>
         </PrivateRoute>
     </main>
-    
+
 </Router>
 
 <Footer/>

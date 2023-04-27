@@ -51,56 +51,49 @@ const apiLimiter = rateLimit({
 });
 app.use(apiLimiter);
 
-const loginLimiter = rateLimit({
+const signinLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 5, 
+    max: 10, 
     standardHeaders: true,
     legacyHeaders: false,
-    message: "Too many login attempts, please try again after 15 minutes",
-    keyGenerator: (req, res) => req.rateLimitKey
 });
-app.use("/auth/login", loginLimiter);
+app.use("/auth/signin", signinLimiter);
 
 
 /* ----------------------------------------------------------  MIDDLEWARE ------------------------------------------------------------------------ */
 
-function authChecker(req, res, next) {
-    console.log("In authchecker .. ");
+function authorizationGuard(req, res, next) {
     if (!req.session.username) {
-        return res.send({ message: "You are not allowed to see this page. Please login" });
+        return res.send({ message: "You are not authorized to see this page" });
     }
     next();
 }
 
-app.use("/profile", authChecker);
+app.use("/auth/profile", authorizationGuard);
 
-function adminChecker(req, res, next) {
-    console.log("In admin checker...");
+function adminGuard(req, res, next) {
     if (!req.session.role === 1) {
-        return res.send({ message: "You are not authorized to see this page. Please login" });
+        return res.send({ message: "You are not authorized to see this page" });
     }
     next();
 }
 
-app.use("/employees", authChecker, adminChecker);
+app.use("/auth/employees", authorizationGuard, adminGuard);
 
-
-function guestChecker(req, res, next) {
-    console.log("In guest checker...");
+function guestGuard(req, res, next) {
     if (!req.session.role === 3) {
-        return res.send({ message: "You are not authorized to see this page. Please login" });
+        return res.send({ message: "You are not authorized to see this page" });
     }
     next();
 }
 
-app.use("/review", authChecker, guestChecker);
-
+app.use("/auth/review", authorizationGuard, guestGuard);
 
 
 /* --------------------------------------------------------  IMPORT ROUTES ----------------------------------------------------------------------- */
 
-import authRouter from "./routers/authRouter.js";
-app.use(authRouter);
+import signinRouter from "./routers/signinRouter.js";
+app.use(signinRouter);
 
 import profileRouter from "./routers/profileRouter.js";
 app.use(profileRouter);

@@ -6,10 +6,10 @@
     import 'toastr/build/toastr.css';
 
     
-    async function handleLogout(){
-        const logoutURL = $BASE_URL + "/auth/logout";
+    async function handleSignout(){
+        const signoutURL = $BASE_URL + "/auth/signout";
 
-        const response = await fetch(logoutURL, {
+        const response = await fetch(signoutURL, {
             credentials: "include"
         });
 
@@ -19,9 +19,13 @@
         $mail = null;
         $role = null;
 
-        toastr.info("See you!");
+        if (data.message) {
+            toastr.info("See you!");
+        } else {
+            toastr.error("Failed to log out. Please try again later.");
+        }
     }
 
 </script>
 
-<Link to="/" on:click={handleLogout}>Log out</Link>
+<Link to="/" on:click={handleSignout}>Sign out</Link>
