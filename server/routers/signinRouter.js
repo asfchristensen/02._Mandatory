@@ -4,6 +4,7 @@ const router = Router();
 import bcrypt from "bcrypt";
 import db from "../database/connection.js";
 
+
 // authentication
 router.post("/auth/signin", async (req, res) => {
     const { password, email } = req.body;
